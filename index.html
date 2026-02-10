@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashika Koripelly — Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f8f6f3;
+            --accent: #c45d3a;
+            --muted: #6b6b6b;
+            --border: #e0ddd8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--paper);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.6;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: white;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 0 3rem;
+            position: relative;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 4rem;
+        }
+
+        .hero-tag {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(3.5rem, 8vw, 6rem);
+            font-weight: 400;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+
+        .hero-name em {
+            font-style: italic;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 420px;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.6s forwards;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.8s forwards;
+        }
+
+        .hero-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--ink);
+            transition: all 0.3s ease;
+        }
+
+        .hero-links a:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .hero-links a.primary {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .hero-links a.primary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .hero-right {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-visual {
+            width: 100%;
+            height: 70vh;
+            object-fit: cover;
+            opacity: 0;
+            animation: scaleIn 1s ease 0.3s forwards;
+        }
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .hero-visual::after {
+            content: 'AK';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Instrument Serif', serif;
+            font-size: 8rem;
+            color: rgba(255,255,255,0.08);
+        }
+
+        .status-badge {
+            position: absolute;
+            bottom: 3rem;
+            right: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 1s forwards;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .section-count {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* Experience Section */
+        .experience-grid {
+            display: grid;
+            gap: 0;
+        }
+
+        .experience-item {
+            display: grid;
+            grid-template-columns: 200px 1fr 150px;
+            gap: 3rem;
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            padding-left: 1rem;
+            background: rgba(196, 93, 58, 0.03);
+        }
+
+        .exp-date {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .exp-content h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 0.25rem;
+        }
+
+        .exp-company {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .exp-desc {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .exp-location {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-align: right;
+        }
+
+        /* Coursework Section */
+        .coursework-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .course-card {
+            background: white;
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+            border: 1px solid transparent;
+        }
+
+        .course-card:hover {
+            border-color: var(--ink);
+            transform: translateY(-4px);
+        }
+
+        .course-tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .course-list {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Involvement Section */
+        .involvement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .involvement-item {
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .involvement-item:hover {
+            border-color: var(--ink);
+            transform: translateY(-4px);
+        }
+
+        .involvement-role {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .involvement-org {
+            color: var(--accent);
+            font-size: 0.9rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .skills-section .section-header {
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .skills-section .section-count {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+        }
+
+        .skill-category h4 {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: rgba(255,255,255,0.7);
+            transition: color 0.3s ease;
+        }
+
+        .skill-category li:hover {
+            color: white;
+        }
+
+        /* Education Section */
+        .education-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .education-main h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-main .degree {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .education-main .grad-date {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .education-courses h4 {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .course-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .course-tags span {
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .course-tags span:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+            padding: 10rem 3rem;
+        }
+
+        .contact-section h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-section h2 em {
+            font-style: italic;
+        }
+
+        .contact-section p {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 3rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .contact-links a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 1rem 2rem;
+            border: 1px solid var(--ink);
+            transition: all 0.3s ease;
+        }
+
+        .contact-links a:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--ink);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 0.2;
+            }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 8rem;
+            }
+
+            .hero-left {
+                padding-right: 0;
+            }
+
+            .hero-right {
+                display: none;
+            }
+
+            .experience-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .exp-location {
+                text-align: left;
+            }
+
+            .coursework-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .involvement-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .education-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" class="logo">Ashika Koripelly</a>
+        <ul class="nav-links">
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#coursework">Coursework</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-left">
+            <p class="hero-tag">Software Engineer</p>
+            <h1 class="hero-name">Ashika<br><em>Koripelly</em></h1>
+            <p class="hero-desc">Hi! I'm Ashika and I'm a undergraduate student at the University of Illinois at Urbana-Champaign studying Computer Science & Advertising with a minor in Economics. Keep Scrolling to learn</p>
+            <div class="hero-links">
+            </div>
+        </div>
+        <div class="hero-right">
+            <img src="photo.jpg" alt="Ashika Koripelly" class="hero-visual">
+        </div>
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            Joining Amazon · Sept 2026
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="section-header">
+            <h2 class="section-title">Experience</h2>
+            <span class="section-count">06 roles</span>
+        </div>
+        <div class="experience-grid">
+            <div class="experience-item">
+                <span class="exp-date">Sep — Dec 2025</span>
+                <div class="exp-content">
+                    <h3>Software Engineer</h3>
+                    <p class="exp-company">Xanevo</p>
+                    <p class="exp-desc">Building agentic RAG chatbot using Weaviate Cloud for personalized e-commerce product recommendations. Implementing categorization and translation components to streamline customer consultation workflows.</p>
+                </div>
+                <span class="exp-location">Vienna, Austria</span>
+            </div>
+            <div class="experience-item">
+                <span class="exp-date">May — Aug 2025</span>
+                <div class="exp-content">
+                    <h3>Software Development Engineer Intern</h3>
+                    <p class="exp-company">Amazon</p>
+                    <p class="exp-desc">Worked within ORCA, Amazon's Tier-1 managed runtime ecosystem for orchestration. Implemented synchronous batch operations, dynamic RunID generation with Redux, and parent-child relationship tracking for complex workflow visualization.</p>
+                </div>
+                <span class="exp-location">Seattle, WA</span>
+            </div>
+            <div class="experience-item">
+                <span class="exp-date">Aug 2024 — May 2025</span>
+                <div class="exp-content">
+                    <h3>Technical Consultant</h3>
+                    <p class="exp-company">Illinois Business Consulting</p>
+                    <p class="exp-desc">Selected for UIUC's largest consulting organization (16% acceptance). Conducted market research and delivered weekly client presentations for cloud computing strategy.</p>
+                </div>
+                <span class="exp-location">Champaign, IL</span>
+            </div>
+            <div class="experience-item">
+                <span class="exp-date">May — Aug 2024</span>
+                <div class="exp-content">
+                    <h3>Software Engineer Intern</h3>
+                    <p class="exp-company">Abbott</p>
+                    <p class="exp-desc">Built alert systems for Freestyle Libre customer database using SQL and New Relic. Migrated web service testing from Postman to k6 and researched AI capabilities for anomaly detection.</p>
+                </div>
+                <span class="exp-location">Chicago, IL</span>
+            </div>
+            <div class="experience-item">
+                <span class="exp-date">Jan 2024 — Jan 2025</span>
+                <div class="exp-content">
+                    <h3>Data & Web Dev Intern</h3>
+                    <p class="exp-company">Illinois State Geological Survey</p>
+                    <p class="exp-desc">Built and maintained web pages for geological data presentation. Assisted with data extraction, SQL database management, and analysis for research projects.</p>
+                </div>
+                <span class="exp-location">Champaign, IL</span>
+            </div>
+            <div class="experience-item">
+                <span class="exp-date">Jan 2023 — Jan 2024</span>
+                <div class="exp-content">
+                    <h3>Undergraduate Researcher</h3>
+                    <p class="exp-company">MAd Lab & MUSE Lab, UIUC</p>
+                    <p class="exp-desc">Researched AI-driven advertising strategies using Python and SQL. Applied machine learning, network analysis, and text mining to analyze social media data and algorithmic impacts.</p>
+                </div>
+                <span class="exp-location">Champaign, IL</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="coursework">
+        <div class="section-header">
+            <h2 class="section-title">Relevant Coursework</h2>
+            <span class="section-count">UIUC</span>
+        </div>
+        <div class="coursework-grid">
+            <div class="course-card">
+                <p class="course-tag">Computer Science</p>
+                <p class="course-list">Java Programming, C++ Programming, Data Structures in C++, Intro to Computer Systems, Algorithms & Models of Computation, Programming Languages and Compilers, Software Design Lab</p>
+            </div>
+            <div class="course-card">
+                <p class="course-tag">Data & Systems</p>
+                <p class="course-list">Database Systems, Data Management in the Cloud</p>
+            </div>
+            <div class="course-card">
+                <p class="course-tag">AI & Advertising</p>
+                <p class="course-list">Applied Machine Learning, AI & Advertising, Computational Advertising, Tech & Ad Campaigns</p>
+            </div>
+            <div class="course-card">
+                <p class="course-tag">Statistics & Economics</p>
+                <p class="course-list">Statistics & Probability, Statistics for Economics with R, Economic Statistics II, Intro to Microeconomics, Intro to Macroeconomics, Economics: Poverty Alleviation</p>
+            </div>
+            <div class="course-card">
+                <p class="course-tag">Social Sciences</p>
+                <p class="course-list">Racial & Ethnic Politics</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="involvement">
+        <div class="section-header">
+            <h2 class="section-title">On-Campus Involvement</h2>
+            <span class="section-count">03 roles</span>
+        </div>
+        <div class="involvement-grid">
+            <div class="involvement-item">
+                <div class="involvement-role">Social Chair</div>
+                <div class="involvement-org">ACM @ UIUC</div>
+            </div>
+            <div class="involvement-item">
+                <div class="involvement-role">Technical Consultant</div>
+                <div class="involvement-org">Illinois Business Consulting</div>
+            </div>
+            <div class="involvement-item">
+                <div class="involvement-role">Product Manager</div>
+                <div class="involvement-org">American Advertising Federation</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills-section">
+        <div class="section-header">
+            <h2 class="section-title">Technical Skills</h2>
+            <span class="section-count">Stack</span>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h4>Languages</h4>
+                <ul>
+                    <li>Python</li>
+                    <li>TypeScript</li>
+                    <li>JavaScript</li>
+                    <li>Java</li>
+                    <li>C++</li>
+                    <li>SQL</li>
+                    <li>R</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h4>Frontend</h4>
+                <ul>
+                    <li>React.js</li>
+                    <li>Redux</li>
+                    <li>HTML/CSS</li>
+                    <li>AWS UI</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h4>Backend & Data</h4>
+                <ul>
+                    <li>Node.js</li>
+                    <li>Flask</li>
+                    <li>MongoDB</li>
+                    <li>Weaviate</li>
+                    <li>REST APIs</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h4>Tools & ML</h4>
+                <ul>
+                    <li>Docker</li>
+                    <li>PyTorch</li>
+                    <li>New Relic</li>
+                    <li>Git</li>
+                    <li>k6</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="section-header">
+            <h2 class="section-title">Education</h2>
+            <span class="section-count">UIUC</span>
+        </div>
+        <div class="education-content">
+            <div class="education-main">
+                <h3>University of Illinois<br>Urbana-Champaign</h3>
+                <p class="degree">B.S. Computer Science + Advertising</p>
+                <p class="degree" style="margin-top: 0.25rem;">Minor in Microeconomics</p>
+                <p class="grad-date">Graduating May 2026</p>
+            </div>
+            <div class="education-courses">
+                <h4>Highlights</h4>
+                <div class="course-tags">
+                    <span>Applied Machine Learning</span>
+                    <span>Algorithms</span>
+                    <span>Database Systems</span>
+                    <span>Compilers</span>
+                    <span>Computational Advertising</span>
+                    <span>Data Management in Cloud</span>
+                    <span>Statistics with R</span>
+                    <span>Software Design Lab</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2>Contact Me!<br><em></em></h2>
+        <div class="contact-links">
+            <a href="mailto:ashika.koripelly@gmail.com">Email ↗</a>
+            <a href="https://www.linkedin.com/in/ashika-koripelly/">LinkedIn ↗</a>
+            <a href="https://github.com/ashikakoripelly">GitHub ↗</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Ashika Koripelly.</p>
+        <div class="footer-links">
+            <a href="mailto:ashika.koripelly@gmail.com">ashika.koripelly@gmail.com</a>
+            <a href="tel:8478994497">(847) 899-4497</a>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth reveal on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.experience-item, .course-card, .involvement-item, .skill-category').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
