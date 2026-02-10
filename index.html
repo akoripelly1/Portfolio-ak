@@ -387,10 +387,15 @@
             margin-bottom: 0.5rem;
         }
 
-        .involvement-org {
+        .involvement-org a {
             color: var(--accent);
-            font-size: 0.9rem;
-            letter-spacing: 0.02em;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .involvement-org a:hover {
+            border-bottom-color: var(--accent);
         }
 
         /* Skills Section */
@@ -671,8 +676,11 @@
         <ul class="nav-links">
             <li><a href="#experience">Experience</a></li>
             <li><a href="#coursework">Coursework</a></li>
+            <li><a href="#involvement">Involvement</a></li>
             <li><a href="#skills">Skills</a></li>
+            <li><a href="#education">Education</a></li>
             <li><a href="#contact">Contact</a></li>
+
         </ul>
     </nav>
 
@@ -785,20 +793,32 @@
         </div>
     </section>
 
-    <section id="involvement">
+<section id="involvement">
         <div class="section-header">
             <h2 class="section-title">On-Campus Involvement</h2>
-            <span class="section-count">03 roles</span>
+            <span class="section-count">05 roles</span>
         </div>
         <div class="involvement-grid">
             <div class="involvement-item">
                 <div class="involvement-role">Social Chair</div>
                 <div class="involvement-org">ACM @ UIUC</div>
             </div>
+             <div class="involvement-item">
+                <div class="involvement-role">Cyber 9/12 Semi-Finalist</div>
+                <div class="involvement-org"><a href="https://siebelschool.illinois.edu/news/cyber-9-12-competition-win" target="_blank">Atlantic Council</a></div>
+            </div>             
             <div class="involvement-item">
                 <div class="involvement-role">Technical Consultant</div>
                 <div class="involvement-org">Illinois Business Consulting</div>
             </div>
+             <div class="involvement-item">
+                <div class="involvement-role">Staff Writer</div>
+                <div class="involvement-org"><a href="https://tfnuiuc.substack.com/p/how-technology-is-reshaping-creativity" target="_blank">The Fashion Network @ UIUC</a></div>
+            </div> 
+             <div class="involvement-item">
+                <div class="involvement-role">Social Committee</div>
+                <div class="involvement-org"><a href="https://illinoiswcs.medium.com/wcs-declassified-cs-survival-guide-536d795de0ac" target="_blank">Women in Computer Science @ UIUC</a></div>
+            </div>                     
             <div class="involvement-item">
                 <div class="involvement-role">Product Manager</div>
                 <div class="involvement-org">American Advertising Federation</div>
